@@ -1,0 +1,21 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1160,
+  "height": 500,
+  "title": {"text": "Farm Income Over Time", "subtitle": "Select a state in the legend to highlight it"},
+  "data": {"url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"},
+  "params": [{"name": "state_highlight", "select": {"type": "point", "fields": ["State"]}, "bind": "legend"}],
+  "mark": {"type": "line", "point": true, "tooltip": true, "strokeWidth": 2.5},
+  "encoding": {
+    "x": {"field": "Year", "type": "ordinal", "title": "Year"},
+    "y": {"field": "overall_farm_income", "type": "quantitative", "title": "Farm income ($M)", "axis": {"format": ".2s"}},
+    "color": {"field": "State", "type": "nominal", "scale": {"scheme": "tableau10"}},
+    "opacity": {"condition": {"param": "state_highlight", "value": 1}, "value": 0.18},
+    "tooltip": [
+      {"field": "State"},
+      {"field": "Year"},
+      {"field": "overall_farm_income", "title": "Farm income ($M)", "format": ",.0f"}
+    ]
+  },
+  "config": {"font": "Inter", "view": {"stroke": null}}
+}

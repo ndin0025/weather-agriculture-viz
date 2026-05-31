@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Australia's Farming in a Changing Climate</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header class="hero-cover">
+    <div class="hero-overlay">
+      <p class="sub2">Australian climate and agriculture</p>
+      <h1>Australia's Farming in a Changing Climate</h1>
+      <p class="subtitle">
+        Australia is affected by diverse weather systems, resulting in highly variable and often extreme climate
+        conditions across regions. This dashboard explores how rainfall, temperature, and climate-related costs shape
+        farming outcomes across Australian states and territories from 2010 to 2017.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <div class="year-filter">
+      <span>Explore by year:</span>
+      <div id="yearButtons" class="year-buttons">
+        <button class="year-btn active" data-year="all">Average</button>
+      </div>
+    </div>
+    <section class="kpi-row" aria-label="Key indicators">
+      <div class="kpi-card">
+        <p>Highest average rainfall</p>
+        <h2 id="rain_value">-</h2>
+        <span id="rain_state">Loading</span>
+      </div>
+      <div class="kpi-card">
+        <p>Highest average temperature</p>
+        <h2 id="temp_value">-</h2>
+        <span id="temp_state">Loading</span>
+      </div>
+      <div class="kpi-card">
+        <p>Highest farm income</p>
+        <h2 id="income_value">-</h2>
+        <span id="income_state">Loading</span>
+      </div>
+      <div class="kpi-card">
+        <p>Highest insurance cost</p>
+        <h2 id="ins_value">-</h2>
+        <span id="ins_state">Loading</span>
+      </div>
+    </section>
+
+    <section class="intro-box">
+      <p>
+        Climate is one of the most important drivers of Australian agriculture, influencing water availability, production
+        conditions, and farming risk. However, favourable weather does not always guarantee stronger economic outcomes. While
+        rainfall and temperature shape agricultural conditions across the country, differences in farm income and
+        climate-related costs reveal a more complex relationship. This dashboard explores how environmental conditions,
+        agricultural profitability, and financial risk interact across Australian states between 2010 and 2017.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <span>01</span>
+        <div>
+          <h2>Australia's climate is highly uneven</h2>
+          <p>
+            Rainfall, temperature, and farm income vary sharply across states.
+            The maps provide the geographic overview before looking at time trends and costs.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-dashboard">
+        <div class="feature-card">
+          <div class="feature-chart">
+            <div id="income_map"></div>
+          </div>
+          <div class="feature-insight">
+            <span>Income insight</span>
+            <p>
+              Farm income is concentrated in several major agricultural states, particularly Queensland, Victoria and
+              New South Wales.
+              These states benefit from relatively favourable climate conditions, combining moderate rainfall with
+              suitable temperatures for agricultural production.
+              This supports stronger agricultural activity and comparatively high income across Australia states.
+            </p>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <div class="small-chart">
+            <div id="temp_map"></div>
+          </div>
+
+          <div class="feature-insight">
+            <span>Temperature insight</span>
+            <p>
+              Temperature differences across Australia create very different agricultural conditions between states.
+              Hotter regions such as the Northern Territory and inland Queensland often require greater irrigation and
+              face higher
+              risks of drought and heat stress, while cooler states such as Tasmania and Victoria are more suitable for
+              dairy farming,
+              livestock production, and temperature-sensitive crops.
+            </p>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <div class="small-chart">
+            <div id="rainfall_map"></div>
+          </div>
+          <div class="feature-insight">
+            <span>Rainfall insight</span>
+            <p>
+              Tasmania records the highest average rainfall, while South Australia and parts of the inland west remain much
+              drier. States along the east coast, particularly Queensland, New South Wales, and Victoria, benefit from more
+              stable rainfall patterns that support cropping, dairy farming, and livestock production. In contrast, drier
+              regions often
+              rely heavily on irrigation and are more vulnerable to drought, water shortages, and lower agricultural
+              reliability.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <span>02</span>
+        <div>
+          <h2>Weather patterns shape farming conditions</h2>
+          <p>
+            Rainfall is not just about yearly totals. Timing, seasonal pattern, and wind conditions also affect farming
+            risk.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-dashboard">
+        <div class="feature-card">
+          <div class="feature-chart">
+            <div id="monthly_heatmap"></div>
+          </div>
+
+          <div class="feature-insight">
+            <span>Rainfall intensity insight</span>
+            <p>
+              Rainfall intensity changes across both states and years, showing that farming risk depends on more than
+              average rainfall totals.
+              Tasmania remains consistently wetter, while drier states such as South Australia and Western Australia show
+              lower rainfall intensity.
+              This highlights how seasonal rainfall patterns can affect water availability, crop planning, and drought
+              exposure.
+            </p>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <div class="small-chart">
+            <div id="rainfall_month_bar"></div>
+          </div>
+
+          <div class="feature-insight">
+            <span>Rainfall by state insight</span>
+            <p>
+              Tasmania records the highest average rainfall, while South Australia and Western Australia remain much drier.
+              This uneven rainfall distribution means some states have stronger natural water availability, while others
+              rely more heavily on irrigation and water management.
+            </p>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <div class="small-chart">
+            <div id="wind_rose"></div>
+          </div>
+
+          <div class="feature-insight">
+            <span>Wind insight</span>
+            <p>
+              Wind conditions add another layer of agricultural risk. Frequent gust patterns can increase evaporation,
+              reduce soil moisture, and make farming conditions less stable, especially when rainfall is already limited.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="section">
+  <div class="section-heading">
+    <span>03</span>
+    <div>
+      <h2>Climate advantage does not guarantee profitability</h2>
+      <p>
+        Farm income and production costs move differently across states. Use the dropdowns in the charts to focus on one
+        state.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-dashboard">
+    <div class="feature-card">
+      <div class="feature-chart">
+        <div id="income_line"></div>
+      </div>
+
+      <div class="feature-insight">
+        <span>Income trend insight</span>
+        <p>
+          Farm income increases unevenly across states, showing that favourable climate conditions do not automatically
+          lead to stronger profitability.
+          Queensland, Victoria and New South Wales remain among the stronger income states, but income patterns also
+          depend on production scale,
+          market conditions, and farm management rather than rainfall or temperature alone.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-chart">
+        <div id="cost_breakdown"></div>
+      </div>
+
+      <div class="feature-insight">
+        <span>Cost pressure insight</span>
+        <p>
+          Cost composition is relatively similar across states, with fertiliser making up the largest share of
+          agricultural costs.
+          This suggests that even states with strong climate advantages still face major input costs, which can reduce
+          the financial benefits
+          of favourable rainfall or temperature conditions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <span>04</span>
+    <div>
+      <h2>Climate risk is becoming a financial burden</h2>
+      <p>
+        The scatterplots test whether more rainfall or higher temperature clearly explains farm income and insurance
+        pressure.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-dashboard">
+    <div class="feature-card">
+      <div class="feature-chart">
+        <div id="scatter"></div>
+      </div>
+
+      <div class="feature-insight">
+        <span>Rainfall and income insight</span>
+        <p>
+          More rainfall does not always mean higher farm income. High-rainfall states such as Tasmania do not
+          necessarily achieve the highest
+          income levels, while some moderate-rainfall states perform strongly. This shows that profitability depends on
+          wider economic,
+          operational, and regional factors, not rainfall alone.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-chart">
+        <div id="temp_cost"></div>
+      </div>
+
+      <div class="feature-insight">
+        <span>Heat and insurance insight</span>
+        <p>
+          Higher temperatures are linked with greater climate-related financial pressure in some states. Hotter regions
+          may face higher
+          insurance costs because of increased exposure to drought, heat stress, and extreme weather risk, making
+          climate risk a direct
+          cost for agricultural producers.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer>
+    <p>Created by Ngan Dinh, 2026. Built with Vega-Lite. Data visualisation for FIT3179 / FIT2179.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
