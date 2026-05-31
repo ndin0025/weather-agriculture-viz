@@ -1,0 +1,15 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1160,
+  "height": 500,
+  "title": {"text": "Rainfall Intensity Over Time", "subtitle": "State × year heatmap"},
+  "data": {"url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"},
+  "mark": {"type": "rect", "tooltip": true},
+  "encoding": {
+    "x": {"field": "Year", "type": "ordinal", "title": "Year"},
+    "y": {"field": "State", "type": "nominal", "title": "State"},
+    "color": {"field": "annual_avg_rainfall", "type": "quantitative", "title": "Rainfall (mm)", "scale": {"scheme": "blues"}},
+    "tooltip": [{"field": "State"}, {"field": "Year"}, {"field": "annual_avg_rainfall", "title": "Rainfall (mm)", "format": ",.0f"}]
+  },
+  "config": {"font": "Inter", "view": {"stroke": null}}
+}
