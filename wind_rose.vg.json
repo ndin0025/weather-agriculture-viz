@@ -1,0 +1,29 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 500,
+  "title": {"text": "Dominant Wind Gust Direction", "subtitle": "Frequency of most common wind direction"},
+  "data": {"url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"},
+  "transform": [
+    {"filter": "datum.most_common_wind_gust_dir != null && datum.most_common_wind_gust_dir != ''"},
+    {"calculate": "indexof(['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'], datum.most_common_wind_gust_dir)", "as": "dir_order"},
+    {"aggregate": [{"op": "count", "as": "frequency"}], "groupby": ["most_common_wind_gust_dir", "dir_order"]}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "arc", "innerRadius": 32, "stroke": "white", "strokeWidth": 1},
+      "encoding": {
+        "theta": {"field": "frequency", "type": "quantitative", "stack": true},
+        "radius": {"field": "frequency", "type": "quantitative", "scale": {"rangeMin": 45, "rangeMax": 150}},
+        "color": {"field": "most_common_wind_gust_dir", "type": "nominal", "title": "Wind direction", "sort": {"field": "dir_order"}},
+        "order": {"field": "dir_order", "type": "quantitative"},
+        "tooltip": [{"field": "most_common_wind_gust_dir", "title": "Wind direction"}, {"field": "frequency", "title": "Frequency"}]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "center", "baseline": "middle", "fontSize": 12, "fontWeight": "bold"},
+      "encoding": {"text": {"value": "Wind\ngust"}, "color": {"value": "#213322"}}
+    }
+  ],
+  "config": {"font": "Inter", "view": {"stroke": null}}
+}
