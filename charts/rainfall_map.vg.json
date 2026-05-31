@@ -1,0 +1,39 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "width": 600,
+  "height": 500,
+  "title": {"text": "Average Rainfall by State", "subtitle": "Mean annual rainfall across available years"},
+  "projection": {"type": "mercator"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"
+  },
+  "transform": [
+    {"calculate": "datum.State == 'NSW' ? 'New South Wales' : datum.State == 'VIC' ? 'Victoria' : datum.State == 'QLD' ? 'Queensland' : datum.State == 'SA' ? 'South Australia' : datum.State == 'WA' ? 'Western Australia' : datum.State == 'TAS' ? 'Tasmania' : datum.State == 'NT' ? 'Northern Territory' : datum.State == 'ACT' ? 'Australian Capital Territory' : datum.State", "as": "State_full"},
+    {"aggregate": [{"op": "mean", "field": "annual_avg_rainfall", "as": "avg_rainfall"}], "groupby": ["State", "State_full"]},
+    {
+      "lookup": "State_full",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/states.json",
+          "format": {
+            "type": "topojson",
+            "feature": "states"
+          }
+        },
+        "key": "properties.STATE_NAME"
+      },
+      "as": "geo"
+    }
+  ],
+  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1},
+  "encoding": {
+    "shape": {"field": "geo", "type": "geojson"},
+    "color": {"field": "avg_rainfall", "type": "quantitative", "title": "Rainfall (mm)", "scale": {"scheme": "blues"}},
+    "tooltip": [
+      {"field": "State_full", "title": "State"},
+      {"field": "avg_rainfall", "title": "Average rainfall (mm)", "format": ",.0f"}
+    ]
+  },
+  "config": {"view": {"stroke": null}, "font": "Inter"}
+}
