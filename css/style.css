@@ -1,0 +1,340 @@
+:root {
+  --bg: #f3fdde;
+  --paper: #ffffff;
+  --ink: #213322;
+  --muted: #657060;
+  --green: #4f7a3a;
+  --green-light: #edf5e7;
+  --orange: #d94b2b;
+  --border: #d8dfcf;
+  --shadow: 0 10px 28px rgba(31, 45, 32, 0.10);
+
+  --content-width: min(92vw, 1600px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.hero-cover {
+  width: 100%;
+  min-height: 520px;
+  background:
+    linear-gradient(rgba(20, 35, 20, 0.55), rgba(20, 35, 20, 0.55)),
+    url("../images/australia-farm.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px;
+}
+
+.hero-overlay {
+  width: min(1100px, 92vw);
+  text-align: center;
+  color: white;
+}
+
+.hero-overlay h1 {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.95;
+  color: #fff3df;
+}
+
+.hero-overlay .subtitle {
+  width: 100%;
+  margin: 28px auto 0;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.sub2 {
+  margin: 30px 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff3df;
+}
+
+.year-filter {
+  width: var(--content-width);
+  margin: 28px auto 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.year-filter span {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.year-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.year-btn {
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.year-btn:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+.year-btn.active {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+.kpi-row {
+  width: var(--content-width);
+  margin: 34px auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.kpi-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-top: 5px solid var(--green);
+  border-radius: 18px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.kpi-card p {
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.kpi-card h2 {
+  margin: 14px 0 6px;
+  font-size: clamp(47px, 2.3vw, 52px);
+  color: var(--green);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.kpi-card span {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.intro-box {
+  width: var(--content-width);
+  margin: 28px auto;
+  padding: 30px 34px;
+  background: var(--green-light);
+  border-left: 7px solid var(--green);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+}
+
+.intro-box p {
+  margin: 0;
+  font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 1.75;
+  text-align: justify;
+}
+
+.section {
+  width: var(--content-width);
+  margin: 70px auto;
+  padding: 40px;
+  background: #f8fbf1;
+  border: 1px solid #e3ead7;
+  border-radius: 36px;
+  box-shadow: 0 20px 60px rgba(31, 45, 32, 0.06);
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+.section-heading span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  margin: 6px auto;
+  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: 800;
+}
+
+.section-heading h2 {
+  margin: 0 0 8px;
+  font-size: clamp(40px, 2vw, 48px);
+  color: var(--green);
+}
+
+.section-heading p {
+  margin: 0;
+  max-width: var(--content-width);
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: clamp(18px, 1.5vw, 24px);
+}
+
+.section-dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.feature-card {
+  grid-column: 1 / -1;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.feature-chart {
+  width: 100%;
+  background: #eaf5fb;
+  border-radius: 20px;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-insight {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.feature-insight span {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--green-light);
+  color: var(--green);
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.feature-insight p {
+  margin: 0;
+  width: 100%;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.65;
+  color: var(--ink);
+  text-align: justify;
+}
+
+.small-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.small-chart {
+  background: #eaf5fb;
+  border-radius: 18px;
+  min-height: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-chart,
+.small-chart {
+  padding: 18px;
+  overflow: hidden;
+}
+
+.vega-embed svg {
+  max-width: 100%;
+  height: auto;
+}
+
+footer {
+  max-width: 1180px;
+  margin: 40px auto 0;
+  padding: 36px 24px 48px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.vega-bindings {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.vega-bind select,
+.vega-bind input {
+  margin-left: 8px;
+}
+
+@media (max-width: 1160px) {
+  .section-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .kpi-row {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    grid-template-columns: 1fr;
+  }
+}
