@@ -1,0 +1,148 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "width": 1160,
+  "height": 600,
+  "title": {
+    "text": "Average Farm Income by State",
+    "subtitle": "Mean overall farm income"
+  },
+  "projection": {"type": "mercator"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.State == 'NSW' ? 'New South Wales' : datum.State == 'VIC' ? 'Victoria' : datum.State == 'QLD' ? 'Queensland' : datum.State == 'SA' ? 'South Australia' : datum.State == 'WA' ? 'Western Australia' : datum.State == 'TAS' ? 'Tasmania' : datum.State == 'NT' ? 'Northern Territory' : datum.State == 'ACT' ? 'Australian Capital Territory' : datum.State",
+      "as": "State_full"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "mean",
+          "field": "overall_farm_income",
+          "as": "avg_income"
+        }
+      ],
+      "groupby": ["State_full"]
+    },
+    {
+      "lookup": "State_full",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/main/STE_2021_AUST_GDA2020.json",
+          "format": {
+            "type": "topojson",
+            "feature": "STE_2021_AUST_GDA2020"
+          }
+        },
+        "key": "properties.STE_NAME21"
+      },
+      "as": "geo"
+    }
+  ],
+  "layer": [
+  {
+    "mark": {
+      "type": "geoshape",
+      "stroke": "white",
+      "strokeWidth": 1
+    },
+    "encoding": {
+      "shape": {
+        "field": "geo",
+        "type": "geojson"
+      },
+      "color": {
+        "field": "avg_income",
+        "type": "quantitative",
+        "title": "Income ($M)",
+        "scale": {"scheme": "greens"},
+        "legend": {
+          "titleFontSize": 18,
+          "labelFontSize": 16,
+          "gradientLength": 260,
+          "gradientThickness": 22 }
+      },
+      "tooltip": [
+        {"field": "State_full", "title": "State"},
+        {
+          "field": "avg_income",
+          "title": "Average farm income ($M)",
+          "format": ",.0f"
+        }
+      ]
+    }
+  },
+  {
+    "data": {
+      "values": [
+        {
+          "State": "WA",
+          "lon": 121,
+          "lat": -26
+        },
+        {
+          "State": "NT",
+          "lon": 134,
+          "lat": -22
+        },
+        {
+          "State": "SA",
+          "lon": 135,
+          "lat": -30
+        },
+        {
+          "State": "QLD",
+          "lon": 145,
+          "lat": -24
+        },
+        {
+          "State": "NSW",
+          "lon": 147,
+          "lat": -33
+        },
+        {
+          "State": "VIC",
+          "lon": 145,
+          "lat": -37
+        },
+        {
+          "State": "TAS",
+          "lon": 147,
+          "lat": -42
+        }
+      ]
+    },
+    "mark": {
+      "type": "text",
+      "fill": "black",
+      "fontSize": 13
+    },
+    "encoding": {
+      "longitude": {
+        "field": "lon",
+        "type": "quantitative"
+      },
+      "latitude": {
+        "field": "lat",
+        "type": "quantitative"
+      },
+      "text": {
+        "field": "State"
+      }
+    }
+  }
+],
+  "config": {
+    "font": "Inter",
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "fontSize": 22,
+      "subtitleFontSize": 16,
+      "fontWeight": "bold"
+    }
+  }
+}

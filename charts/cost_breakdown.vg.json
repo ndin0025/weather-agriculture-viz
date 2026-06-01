@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "width": 1160,
+  "height": 500,
+  "title": {"text": "Cost Pressure by State", "subtitle": "Normalised cost composition"},
+  "data": {"url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"},
+  "transform": [
+    {"fold": ["labour_cost", "fertiliser_cost", "agri_insurance_cost_aud_m"], "as": ["Cost type", "Cost"]},
+    {"calculate": "datum['Cost type'] == 'labour_cost' ? 'Labour' : datum['Cost type'] == 'fertiliser_cost' ? 'Fertiliser' : 'Insurance'", "as": "Cost label"}
+  ],
+  "mark": {"type": "bar", "tooltip": true},
+  "encoding": {
+    "x": {"field": "State", "type": "nominal", "title": "State", "axis": {
+        "labelAngle": 0, "labelFontSize": 14, "titleFontSize": 16}},
+    "y": {"aggregate": "mean", "field": "Cost", "type": "quantitative", "stack": "normalize", "title": "Share of cost", "axis": {"format": "%", "labelAngle": 0,
+        "labelFontSize": 14, "titleFontSize": 16}},
+    "color": {
+      "field": "Cost label",
+      "type": "nominal",
+      "title": "Cost type",
+      "scale": {
+        "range": [
+          "#4E79A7",
+          "#F28E2B",
+          "#59A14F"
+        ]
+      },
+      "legend": {
+        "titleFontSize": 18,
+        "labelFontSize": 16,
+        "symbolSize": 180,
+        "symbolStrokeWidth": 2
+      }
+    },
+    "tooltip": [
+      {"field": "State"},
+      {"field": "Cost label", "title": "Cost type"},
+      {"aggregate": "mean", "field": "Cost", "title": "Average cost ($M)", "format": ",.0f"}
+    ]
+  },
+  "config": {"font": "Inter", "view": {"stroke": null}, "title": {
+      "fontSize": 22,
+      "subtitleFontSize": 16,
+      "fontWeight": "bold"} }
+}
+
+
+

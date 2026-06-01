@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "width": 1160,
+  "height": 500,
+  "title": {"text": "Heat and Insurance Pressure", "subtitle": "Hotter conditions can raise climate-related risk"},
+  "data": {"url": "https://raw.githubusercontent.com/ndin0025/weather-agriculture-viz/refs/heads/main/final_merged_data.csv"},
+  "params": [{"name": "State_select", "value": null, "bind": {"input": "select", "options": [null, "NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"], "labels": ["Show all", "NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"], "name": "State: "}}],
+  "transform": [{"filter": "State_select == null || datum.State == State_select"}],
+  "layer": [
+    {
+      "mark": {"type": "circle", "size": 130, "opacity": 0.72, "tooltip": true},
+      "encoding": {
+        "x": {
+          "field": "annual_avg_temp",
+          "type": "quantitative",
+          "title": "Average temperature (°C)",
+          "axis": {
+            "labelAngle": 0,
+            "labelFontSize": 14,
+            "titleFontSize": 16
+          }
+        },
+        "y": {
+          "field": "agri_insurance_cost_aud_m",
+          "type": "quantitative",
+          "title": "Insurance cost ($M)",
+          "axis": {
+            "labelAngle": 0,
+            "labelFontSize": 14,
+            "titleFontSize": 16
+          }
+        },
+        "color": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State",
+          "scale": {
+            "scheme": "set2"
+          },
+          "legend": {
+            "titleFontSize": 18,
+            "labelFontSize": 16,
+            "symbolSize": 180,
+            "symbolStrokeWidth": 2
+          }
+        },
+        "tooltip": [
+          {
+            "field": "State"
+          },
+          {
+            "field": "Year"
+          },
+          {
+            "field": "annual_avg_temp",
+            "title": "Temperature (°C)",
+            "format": ".1f"
+          },
+          {
+            "field": "agri_insurance_cost_aud_m",
+            "title": "Insurance cost ($M)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [{"regression": "agri_insurance_cost_aud_m", "on": "annual_avg_temp"}],
+      "mark": {"type": "line", "strokeDash": [6, 4], "strokeWidth": 2, "color": "#333"},
+      "encoding": {
+        "x": {"field": "annual_avg_temp", "type": "quantitative"},
+        "y": {"field": "agri_insurance_cost_aud_m", "type": "quantitative"}
+      }
+    }
+  ],
+  "config": {
+    "font": "Inter",
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "fontSize": 22,
+      "subtitleFontSize": 16,
+      "fontWeight": "bold"
+    }
+  }
+}
